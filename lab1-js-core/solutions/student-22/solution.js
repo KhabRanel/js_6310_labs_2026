@@ -458,7 +458,7 @@ function runRegexTests() {
     validatePassword("Passw0rd!") === true,
     "password: все требования выполнены",
   );
-  // validatePassword: невалидные случаи (по одному нарушению на тест)
+
   console.assert(
     validatePassword("passw0rd!") === false,
     "password: нет заглавной буквы",
@@ -483,6 +483,14 @@ function runRegexTests() {
     validatePassword("Pw0!abc") === false,
     "password: короче 8 символов",
   );
+  console.assert(
+    validatePassword("Passw0rd#") === true,
+    "password: другой спецсимвол из разрешённого набора",
+  );
+  console.assert(
+    validatePassword("Passw0rd!-") === false,
+    "password: символ вне разрешённого набора",
+  );
 
   console.log("Тесты регулярных выражений завершены");
 }
@@ -490,6 +498,10 @@ function runRegexTests() {
 // ===== ТЕСТИРОВАНИЕ =====
 function runTests() {
   console.log("=== ТЕСТИРОВАНИЕ ===");
+
+  // Тест 0: задание 1 — объявление переменных и вывод типов
+  console.log("Типы переменных (задание 1):");
+  simpleTask();
 
   // Тест 1: getReviewerNumber
   console.assert(
@@ -521,6 +533,21 @@ function runTests() {
   console.log(`Запас хода: ${electricCar.calculateRange()} км`);
 
   const testVehicle = new Vehicle("Test", "Model", 2010);
+  // Тест: статический compareAge
+  console.assert(
+    Vehicle.compareAge(testVehicle, vehicle) === 5,
+    "Тест compareAge провален",
+  );
+
+  // Тест: сеттер year отклоняет год больше текущего
+  let yearErrorThrown = false;
+  try {
+    new Vehicle("Future", "Model", new Date().getFullYear() + 1);
+  } catch (error) {
+    yearErrorThrown = true;
+  }
+  console.assert(yearErrorThrown, "Тест проверки года в сеттере провален");
+
   console.assert(
     testVehicle.age === new Date().getFullYear() - 2010,
     "Тест возраста провален",
@@ -627,7 +654,7 @@ function runTests() {
   // Тест 12: регулярные выражения
   runRegexTests();
 
-  console.log("Все тесты пройдены! ✅");
+  console.log("Тесты завершены");
 }
 
 // Запуск тестов
