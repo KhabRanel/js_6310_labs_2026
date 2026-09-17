@@ -26,7 +26,7 @@ function getReviewerNumber(number, lab) {
 
 function getVariant(number, variants) {
   // 2.2 Функция определяющая номер варианта, исходя из количества вариантов
-  return number % variants;
+  return ((number - 1) % variants) + 1;
 }
 
 function calculate(a, b, operation) {
